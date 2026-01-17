@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64", "windows"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+enum Role {
+  CANDIDATE
+  COMPANY
+  ADMIN
+}
+
+enum JobStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CLOSED
+}
+
+enum AppStatus {
+  PENDING
+  REVIEWED
+  SHORTLISTED
+  REJECTED
+  HIRED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(CANDIDATE)
+  applications Application[]
+  jobs      Job[]    @relation("CompanyJobs")
+}
+
+model Job {
+  id          String   @id @default(cuid())
+  title       String
+  company     String
+  location    String
+  type        String  
+  salary      String?
+  description String
+  requirements String
+  status      JobStatus @default(PENDING)
+  postedBy    User     @relation("CompanyJobs", fields: [postedById], references: [id])
+  postedById  String
+  applications Application[]
+  createdAt   DateTime @default(now())
+}
+
+model Application {
+  id         String   @id @default(cuid())
+  job        Job      @relation(fields: [jobId], references: [id])
+  jobId      String
+  candidate  User     @relation(fields: [candidateId], references: [id])
+  candidateId String
+  resumeUrl  String
+  coverLetter String?
+  aiScore    Float?
+  aiFeedback String?
+  status     AppStatus @default(PENDING)
+  appliedAt  DateTime @default(now())
+}
