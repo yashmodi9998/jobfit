@@ -18,11 +18,11 @@ export default function Navbar() {
           {/* 1. Links for CANDIDATES */}
           {role === "CANDIDATE" && (
             <>
-              <Link href="/jobs" className="text-sm font-medium hover:text-blue-600 transition">
+              <Link href="/dashboard/candidate/find-job" className="text-sm font-medium hover:text-blue-600 transition">
                 Find Jobs
               </Link>
-              <Link href="/my-applications" className="text-sm font-medium hover:text-blue-600 transition">
-                My Applied
+              <Link href="/dashboard/candidate" className="text-sm font-medium hover:text-blue-600 transition">
+                Dashboard
               </Link>
             </>
           )}
@@ -33,7 +33,7 @@ export default function Navbar() {
               <Link href="/dashboard/company" className="text-sm font-medium hover:text-blue-600 transition">
                 Dashboard
               </Link>
-              <Link href="/post-job" className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-700 transition">
+              <Link href="/dashboard/company/jobs/post-job" className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm hover:bg-blue-700 transition">
                 Post a Job
               </Link>
             </>
