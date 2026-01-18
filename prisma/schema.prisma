@@ -58,6 +58,7 @@ model Job {
   postedBy    User     @relation("CompanyJobs", fields: [postedById], references: [id])
   postedById  String
   applications Application[]
+  embedding   Unsupported("vector(1536)")?
   createdAt   DateTime @default(now())
 }
 
@@ -71,6 +72,7 @@ model Application {
   coverLetter String?
   aiScore    Float?
   aiFeedback String?
+  resumeVector  Unsupported("vector(1536)")?
   status     AppStatus @default(PENDING)
   appliedAt  DateTime @default(now())
 }

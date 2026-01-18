@@ -84,7 +84,7 @@ export default async function JobDetailsPage({
               </h2>
               
               
-               <ApplyForm jobId={job.id} userId={userId || ""} />
+               <ApplyForm jobId={job.id} userId={userId || ""} companyName={job.company} />
             </section>
           {/* </div> */}
 
