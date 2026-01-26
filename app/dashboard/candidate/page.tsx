@@ -21,7 +21,7 @@ export default async function CandidateDashboard() {
           description="Tracking your active career paths and AI match scores."
         >
           <Link 
-            href="/jobs" 
+            href="/dashboard/candidate/find-job" 
             className="px-6 py-3 border-2 border-black font-black text-[10px] uppercase tracking-[0.2em] bg-white hover:bg-black hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:scale-95"
           >
             Explore Marketplace
@@ -90,7 +90,7 @@ export default async function CandidateDashboard() {
                     </span>
                   </div>
                   <Link 
-                    href={`/jobs/${app.jobId}`} 
+                    href={`#`} 
                     className="block w-full text-center py-4 border-2 border-black text-black font-bold rounded-xl hover:bg-black hover:text-white transition-all text-xs uppercase tracking-widest active:scale-95 shadow-sm"
                   >
                     View Details

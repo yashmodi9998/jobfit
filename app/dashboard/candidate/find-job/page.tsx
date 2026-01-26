@@ -70,7 +70,7 @@ export default async function Jobs() {
                   </div>
                   
                   <Link 
-                    href={`/dashboard/candidate/find-job/${job.id}`}
+                    href={`/dashboard/candidate/job/${job.id}`}
                     className="px-6 py-3 border-2 border-black text-black font-bold rounded-xl 
                                hover:bg-black hover:text-white transition-all text-xs uppercase tracking-widest active:scale-95"
                   >

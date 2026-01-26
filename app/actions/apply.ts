@@ -20,7 +20,7 @@ export async function submitApplication(jobId: string, resumeUrl: string, note: 
         jobId: jobId,
         candidateId: userId,
         resumeUrl: resumeUrl, 
-        coverLetter: note, // Mapping your textarea 'note' to 'coverLetter'
+        coverLetter: note, 
         status: "PENDING",
         aiScore: Math.floor(Math.random() * 31) + 65, // Placeholder AI logic
       },

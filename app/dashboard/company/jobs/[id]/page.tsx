@@ -93,7 +93,7 @@ export default async function CompanyJobView({
                       </td>
                       <td className="px-8 py-6 text-right">
                         <Link 
-                          href={`/dashboard/company/applications/${app.id}`}
+                          href={`/dashboard/company/application/${app.id}`}
                           className="inline-block px-8 py-3 border-2 border-black text-black text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-black hover:text-white transition-all active:scale-95 shadow-sm"
                         >
                           Review Track
