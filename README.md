@@ -1,6 +1,6 @@
-# 🚀 FitJob: AI-Powered Career Intelligence
+# 🚀 JobFit: AI-Powered Career Intelligence
 
-**FitJob** is a high-performance career optimization platform built with the 2026 tech stack. It leverages Generative AI to bridge the gap between job seekers and their dream roles through deep topological analysis of skill sets and automated interview preparation.
+**JobFit** is a  career optimization platform built with the 2026 tech stack. It leverages Generative AI to bridge the gap between job seekers and their dream roles through deep topological analysis of skill sets and automated interview preparation.
 
 ---
 
@@ -39,8 +39,8 @@ The application implements a robust security layer using Next.js Middleware:
 
 ### 2. Installation
 ```bash
-git clone [[(https://github.com/yashmodi9998/fitjob.git)](https://github.com/yashmodi9998/fitjob.git)]
-cd jobhunt
+git clone [https://github.com/yashmodi9998/jobfit.git](https://github.com/yashmodi9998/jobfit.git)
+cd jobfit
 npm install
 ```
 ### 3. Environment Setup
