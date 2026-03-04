@@ -6,7 +6,7 @@
 
 ## 🛠️ Tech Stack
 
-- **Framework:** [Next.js 15](https://nextjs.org/) (App Router, Server Actions)
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router, Server Actions)
 - **AI Engine:** [Google Gemini 3 Flash](https://ai.google.dev/) (Structured Output & JSON Schema)
 - **Security:** [Auth.js v5](https://authjs.dev/) (Edge-compatible Middleware, JWT Strategy)
 - **Database:** [MongoDB Atlas](https://www.mongodb.com/) (Mongoose ODM)
