@@ -35,5 +35,5 @@ export default auth((req) => {
 
 // 2. The Matcher: Tells Next.js which paths trigger this file
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)", "/dashboard/:path*", "/api/:path*"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)", "/dashboard/:path*", "/api/:path*","/results/:path*","/reviewresume/:path*"],
 };

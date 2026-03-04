@@ -51,7 +51,7 @@ const RegisterPage = () => {
         <CardHeader className="space-y-1">
           <CardTitle className="text-3xl font-bold text-gray-800">Register</CardTitle>
           <CardDescription>
-            Create an account to join FitJob
+            Create an account to join JobFit
           </CardDescription>
         </CardHeader>
 

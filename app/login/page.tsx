@@ -11,24 +11,27 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 const LoginPage = () => {
+  // Router for navigation after login
   const router = useRouter();
+  // State for form fields, loading state, and error messages
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+// Handle form submission for email/password login
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
+      // Use NextAuth's signIn function with "credentials" provider
       const res = await signIn("credentials", {
         email,
         password,
         redirect: false, // Prevents automatic reload so we can handle errors
       });
-
+// Check for errors in the response and navigate to dashboard on success
       if (res?.error) {
         setError("Invalid email or password");
       } else {
@@ -36,6 +39,7 @@ const LoginPage = () => {
         router.refresh();
       }
     } catch (err) {
+      // Catch any unexpected errors and display a generic message
       setError("Something went wrong. Please try again.");
       console.error("Login error:", err);
     } finally {
@@ -49,7 +53,7 @@ const LoginPage = () => {
         <CardHeader className="space-y-1">
           <CardTitle className="text-3xl font-bold text-gray-800">Login</CardTitle>
           <CardDescription>
-            Enter your email to sign in to your FitJob account
+            Enter your email to sign in to your JobFit account
           </CardDescription>
         </CardHeader>
 

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+// User model to store user information and credentials
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,

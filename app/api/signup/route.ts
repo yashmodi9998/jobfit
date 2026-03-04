@@ -6,9 +6,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
+    // Parse the incoming JSON data
     const body = await request.json();
     
-    // 1. Validate the data against our Zod schema
+    //  Validate the data against our Zod schema
     const validation = signupSchema.safeParse(body);
 
     if (!validation.success) {
@@ -18,14 +19,15 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
+// If validation is successful, we can safely extract the validated data
     const { name, email, password } = validation.data;
 
-    // 2. Connect to Database
+    //  Connect to Database
     await dbConnect();
 
-    // 3. Check for existing user
+    //  Check for existing user
     const existingUser = await User.findOne({ email });
+    // If a user with the provided email already exists, we return a 400 response with an appropriate message. This prevents duplicate accounts and ensures email uniqueness in our system.
     if (existingUser) {
       return NextResponse.json(
         { message: "User already exists with this email" }, 
@@ -33,16 +35,17 @@ export async function POST(request: Request) {
       );
     }
 
-    // 4. Hash the password
+    //  Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 5. Create and save new user
+    //  Create and save new user
     const newUser = new User({ 
         name, 
         email, 
         password: hashedPassword 
     });
-    
+    // save new user to the database.
+
     await newUser.save();
 
     return NextResponse.json(
@@ -51,6 +54,7 @@ export async function POST(request: Request) {
     );
 
   } catch (error) {
+    
     console.error("Signup error details:", error);
     return NextResponse.json(
         { message: "Internal Server Error" }, 

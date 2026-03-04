@@ -3,11 +3,12 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 
 export default function Navbar() {
+  // Get the current session and authentication status using NextAuth's useSession hook
   const { data: session, status } = useSession();
 
   return (
     <nav className="flex justify-between items-center p-4 bg-gray-900 text-white shadow-lg">
-      <Link href="/" className="text-xl font-bold">FitJob</Link>
+      <Link href="/" className="text-xl font-bold">JobFit</Link>
 
       <div className="flex gap-6 items-center">
         {status === "authenticated" ? (
