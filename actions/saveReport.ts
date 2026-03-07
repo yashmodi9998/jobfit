@@ -3,8 +3,11 @@
 import dbConnect from "@/lib/dbConfig";
 import { auth } from "@/lib/auth";
 import Report from "@/app/model/reportModel";
-// This action handles saving the report to the database after processing
-// 1. Define the incoming data structure
+
+//  This server action handles saving the AI-generated report to the database after the review process is complete. 
+// It ensures that only authenticated users can save reports and associates each report with the correct user ID.
+//saveReportAction is called from the reviewresume/page.tsx after receiving the AI analysis results. 
+// It takes the analysis data, connects to the database, and creates a new report document linked to the user.
 interface SaveReportData {
   resume: string;
   jobDescription: string;
@@ -18,31 +21,40 @@ interface SaveReportData {
     answer: string;
     intention: string;
   }>;
+  // NEW FIELD ADDED HERE
+  revisedResume: {
+    revisedSummary: string;
+    revisedExperience: Array<{
+      role: string;
+      optimizedBulletPoints: string[];
+    }>;
+    suggestedSkills: string[];
+  };
 }
-
-// 2. Define a consistent return type
+// Define the shape of the response from the action
 interface ActionResponse {
   success: boolean;
   reportId: string | null;
   error: string | null;
 }
-
+//
 export async function saveReportAction(data: SaveReportData): Promise<ActionResponse> {
   try {
-    // check if user is authenticated
+    // Check if the user is authenticated   
     const session = await auth();
-    // If there's no valid session or user ID, we return an error response instead of throwing an exception
     if (!session?.user?.id) {
       return { success: false, error: "You must be logged in to save reports.", reportId: null };
     }
-// connect to the database
+
     await dbConnect();
-// Create a new report document in MongoDB with the provided data and the authenticated user's ID
+// console.log("Saving revisedResume check:", !!data.revisedResume);
+// newReport is created with all the analysis data, including the new revisedResume field, 
+// and linked to the user's ID from the session.
     const newReport = await Report.create({
       ...data,
       userId: session.user.id,
     });
-// Return a success response with the new report's ID, ensuring it's a string for consistency
+
     return { 
       success: true, 
       reportId: (newReport._id as string).toString(), 
@@ -50,13 +62,8 @@ export async function saveReportAction(data: SaveReportData): Promise<ActionResp
     };
 
   } catch (error: unknown) {
-    
+    console.error("Database Save Error:", error);
     const errorMessage = error instanceof Error ? error.message : "Failed to save report";
-    
-    return { 
-      success: false, 
-      error: errorMessage, 
-      reportId: null 
-    };
+    return { success: false, error: errorMessage, reportId: null };
   }
 }

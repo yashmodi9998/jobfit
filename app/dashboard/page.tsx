@@ -29,7 +29,9 @@ export default async function DashboardPage() {
   }
 // Fetch user's reports from the database
   await dbConnect();
-  const reports = await Report.find({ userId: session.user.id })
+  const reports = await Report.find({ userId: session.user.id 
+    
+  })
     .sort({ createdAt: -1 })
     .lean();
 
@@ -37,10 +39,11 @@ export default async function DashboardPage() {
     <div className="min-h-screen bg-slate-50/50 flex">
       <aside className="w-64 bg-white border-r border-slate-200 hidden md:flex flex-col">
         <div className="p-6">
-       
+       {/* SIDEBAR */}
         <DashboardSidebar />
         
         </div>
+        {/* SIGN OUT */}
         <div className="p-4 border-t">
           <form action={async () => {
             "use server";
@@ -54,6 +57,7 @@ export default async function DashboardPage() {
       </aside>
 
       <main className="flex-1 p-8">
+        {/* HEADER */}
         <header className="flex justify-between items-center mb-10">
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-slate-900">Dashboard</h1>

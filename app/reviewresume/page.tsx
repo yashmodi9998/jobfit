@@ -3,41 +3,41 @@
 import React, { useState, useRef } from 'react';
 import { Briefcase, FileText, UploadCloud, CheckCircle2, Zap, Loader2, AlertCircle, XCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-
-// Shadcn UI
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
-// Server Actions & AI logic
 import { parsePDF } from '@/actions/parsePDFAction';
 import { generateReport } from '@/lib/ai';
 import { saveReportAction } from '@/actions/saveReport';
 
 export default function ReviewResume() {
+  // State Management
   const [jobDescription, setJobDescription] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [loadingStep, setLoadingStep] = useState(""); 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  
+  // Ref for file input to trigger click programmatically
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-
+// Handle file selection and validation
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrorMessage(null);
+    // Ensure a file is selected
     const file = e.target.files?.[0];
-    
+    // Validate file type and size (e.g., only PDFs under 5MB)
     if (file && file.type === "application/pdf") {
       if (file.size > 5 * 1024 * 1024) {
         setErrorMessage("File too large. Please upload a PDF under 5MB.");
         return;
       }
+      // Valid file selected
       setSelectedFile(file);
     } else if (file) {
       setErrorMessage("Invalid file type. Please upload a PDF document.");
     }
   };
-
+// Main form submission handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedFile || !jobDescription || loading) return;
@@ -46,7 +46,7 @@ export default function ReviewResume() {
     setErrorMessage(null);
 
     try {
-      // 1. Extract Text from PDF
+      //  Extract Text from PDF
       setLoadingStep("Extracting text from PDF...");
       const formData = new FormData();
       formData.append("resume", selectedFile);
@@ -59,32 +59,33 @@ export default function ReviewResume() {
         throw new Error(parseResult?.error || "Failed to parse PDF content.");
       }
 
-      // 2. AI Analysis via Gemini
+      //  AI Analysis via Gemini
       setLoadingStep("AI is analyzing alignment...");
       const aiResult = await generateReport({ 
         resume: parseResult.data.resumeText, 
         jobDescription: jobDescription 
       });
-
+// Type Guard: Ensures aiResult is defined and has the expected structure
       if (!aiResult) {
         throw new Error("AI Analysis failed to generate a response.");
       }
 
-      // 3. Save to MongoDB
+      //  Save to MongoDB
       setLoadingStep("Saving results to your dashboard...");
       const saveResult = await saveReportAction({
         resume: parseResult.data.resumeText,
         jobDescription: jobDescription,
         technicalQuestions: aiResult.technicalQuestions,
         skillScore: aiResult.skillScore,
-        matchPercentage: aiResult.matchingPercentage 
+        matchPercentage: aiResult.matchPercentage ,
+        revisedResume: aiResult.revisedResume // NEW FIELD INCLUDED IN SAVE
       });
-
+// Type Guard: Ensures saveResult is defined and indicates success
       if (!saveResult.success || !saveResult.reportId) {
         throw new Error(saveResult.error || "Failed to save the report.");
       }
 
-      // 4. Redirect to Results
+      //  Redirect to Results
       router.push(`/results/${saveResult.reportId}`);
 
     } catch (error: unknown) {
