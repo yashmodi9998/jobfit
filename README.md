@@ -64,8 +64,13 @@ npm run dev
 ```
 ### 5. Screenshots
 <img width="1409" height="831" alt="Screenshot 2026-03-07 at 2 29 12 PM" src="https://github.com/user-attachments/assets/9364cc23-a63d-49e5-ba3f-6153427f80e5" />
-<img width="1409" height="831" alt="Screenshot 2026-03-07 at 2 30 03 PM" src="https://github.com/user-attachments/assets/c4a4dab9-090c-4ff3-93aa-ba1085901a1e" />
+
 <img width="1409" height="831" alt="Screenshot 2026-03-07 at 2 30 18 PM" src="https://github.com/user-attachments/assets/0a685940-685d-47ca-bc90-6bc3511888e6" />
+
+![1772912376426-4762c890-aba3-4aba-a0c2-6598e5839c3c_1](https://github.com/user-attachments/assets/46e55be7-171f-4f7f-adcb-2817aaab07f7)
+![1772912376426-4762c890-aba3-4aba-a0c2-6598e5839c3c_2](https://github.com/user-attachments/assets/ed6a0dc5-ef7c-4cde-a48b-68a4df794e6d)
+![1772912376426-4762c890-aba3-4aba-a0c2-6598e5839c3c_3](https://github.com/user-attachments/assets/4adfa2c7-9a15-4070-abcd-1825757ed772)
+
 
 
 
