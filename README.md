@@ -22,8 +22,8 @@ JobFit is a full-stack SaaS application designed to bridge the gap between job s
 
 ## 🛡️ Security Features
 
-* **IDOR Prevention:** All database queries are scoped to the authenticated `userId`.
-* **Server-Side Validation:** User sessions are verified on every API request and Page Load.
+* All database queries are scoped to the authenticated `userId`.
+*  User sessions are verified on every API request and Page Load.
 
 ## 🚀 Getting Started
 
@@ -62,3 +62,10 @@ GOOGLE_CLIENT_ID = google_client_id
 npm run dev
 
 ```
+### 5. Screenshots
+<img width="1409" height="831" alt="Screenshot 2026-03-07 at 2 29 12 PM" src="https://github.com/user-attachments/assets/9364cc23-a63d-49e5-ba3f-6153427f80e5" />
+<img width="1409" height="831" alt="Screenshot 2026-03-07 at 2 30 03 PM" src="https://github.com/user-attachments/assets/c4a4dab9-090c-4ff3-93aa-ba1085901a1e" />
+<img width="1409" height="831" alt="Screenshot 2026-03-07 at 2 30 18 PM" src="https://github.com/user-attachments/assets/0a685940-685d-47ca-bc90-6bc3511888e6" />
+
+
+
