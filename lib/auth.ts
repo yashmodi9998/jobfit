@@ -8,7 +8,6 @@ import Google from "next-auth/providers/google";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
-  // The authorize function is where we validate the user's credentials. We connect to the database, find the user by email, and compare the hashed password.
   providers: [
     Credentials({
       async authorize(credentials) {
@@ -22,6 +21,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           user.password
         );
 
+        // Return the user object; MongoDB _id will be available as user._id
         if (isPasswordCorrect) return user;
         return null;
       },
@@ -29,12 +29,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      // This option allows users to link their Google account even if another account with the same email exists.
       allowDangerousEmailAccountLinking: true,
     }),
   ],
   callbacks: {
-    // This runs when a user tries to sign in
     async signIn({ user, account }) {
       if (account?.provider === "google") {
         try {
@@ -42,26 +40,40 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           const existingUser = await User.findOne({ email: user.email });
 
           if (!existingUser) {
-            // Create the user in MongoDB if they don't exist
-            await User.create({
+            const newUser = await User.create({
               name: user.name,
               email: user.email,
-              // Since they use Google, they don't have a password
               createdAt: new Date(),
             });
+            // Attach the string version of the new MongoDB ID to the user object
+            user.id = newUser._id.toString();
+          } else {
+            // Attach the string version of the existing MongoDB ID to the user object
+            user.id = existingUser._id.toString();
           }
-          return true; // Allow sign in
+          return true; 
         } catch (error) {
           console.error("Error saving Google user:", error);
-          return false; // Prevent sign in on DB error
+          return false;
         }
       }
-      return true; // Allow credentials sign in
+      return true;
     },
 
+    // 1. Map the database ID to the JWT token
+    async jwt({ token, user }) {
+      if (user) {
+        // 'user.id' is set in the authorize() or signIn() steps above
+        token.id = user.id; 
+      }
+      return token;
+    },
+
+    // 2. Transfer the ID from the JWT token to the Session
     async session({ session, token }) {
-      if (token.sub && session.user) {
-        session.user.id = token.sub;
+      if (session.user) {
+        // session.user.id is what you will use in your app
+        session.user.id = token.id as string;
       }
       return session;
     },

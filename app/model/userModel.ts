@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 // User model to store user information and credentials
 const UserSchema = new mongoose.Schema({
+  userId:{
+    type: String,
+    required: true,
+    unique: true,
+  },
   name: {
     type: String,
     required: true,

@@ -15,17 +15,17 @@ export default auth((req) => {
   const isDashboard = nextUrl.pathname.startsWith("/dashboard");
   const isAuthRoute = nextUrl.pathname.startsWith("/login") || nextUrl.pathname.startsWith("/signup");
 
-  // Logic A: Protect the Dashboard
+  //  Protect the Dashboard
   if (isDashboard && !isLoggedIn) {
     return NextResponse.redirect(new URL("/login", nextUrl));
   }
 
-  // Logic B: Protect API routes (except signup/login APIs)
+  //Protect API routes (except signup/login APIs)
   if (isApiRoute && !isLoggedIn && nextUrl.pathname.includes("/user/details")) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  // Logic C: Redirect logged-in users away from Login/Signup pages
+  // Redirect logged-in users away from Login/Signup pages
   if (isAuthRoute && isLoggedIn) {
     return NextResponse.redirect(new URL("/dashboard", nextUrl));
   }
@@ -33,7 +33,7 @@ export default auth((req) => {
   return NextResponse.next();
 });
 
-// 2. The Matcher: Tells Next.js which paths trigger this file
+//. The Matcher: Tells Next.js which paths trigger this file
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)", "/dashboard/:path*", "/api/:path*","/results/:path*","/reviewresume/:path*"],
 };
